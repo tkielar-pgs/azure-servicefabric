@@ -3,6 +3,7 @@
   <Parameters>
     <Parameter Name="PGS.Azure.ServiceFabric.VotingWeb_InstanceCount" DefaultValue="-1" />
     <Parameter Name="ASP_Environment" DefaultValue="Development" />
+    <Parameter Name="VotingWeb_PlacementConstraints" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -23,6 +24,7 @@
     <Service Name="PGS.Azure.ServiceFabric.VotingWeb" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="PGS.Azure.ServiceFabric.VotingWebType" InstanceCount="[PGS.Azure.ServiceFabric.VotingWeb_InstanceCount]">
         <SingletonPartition />
+        <PlacementConstraints>[VotingWeb_PlacementConstraints]</PlacementConstraints>
       </StatelessService>
     </Service>
   </DefaultServices>
