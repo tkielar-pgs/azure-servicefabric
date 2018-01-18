@@ -1,0 +1,9 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "v3.3.7",
+    "angular": "v1.6.4-build.5317+sha.0c3620b",
+    "angular-bootstrap": "v1.1.0"
+  }
+}
