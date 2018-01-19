@@ -32,6 +32,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PGS.Azure.ServiceFabric.VotingApi\PGS.Azure.ServiceFabric.VotingApi.csproj" />
     <ProjectReference Include="..\PGS.Azure.ServiceFabric.VotingWeb\PGS.Azure.ServiceFabric.VotingWeb.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
