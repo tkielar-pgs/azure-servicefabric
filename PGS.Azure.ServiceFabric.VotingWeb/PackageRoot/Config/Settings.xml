@@ -6,4 +6,9 @@
     <Parameter Name="MyParameter" Value="Value1" />
   </Section>
   -->
+
+  <Section Name="Communication">
+    <Parameter Name="ProxyPort" Value="" MustOverride="true" />
+    <Parameter Name="VotingApiServiceName" Value="" MustOverride="true" />
+  </Section>
 </Settings>

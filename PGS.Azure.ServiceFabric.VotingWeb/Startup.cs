@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PGS.Azure.ServiceFabric.VotingWeb.Configuration;
 
 namespace PGS.Azure.ServiceFabric.VotingWeb
 {
@@ -12,7 +13,11 @@ namespace PGS.Azure.ServiceFabric.VotingWeb
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) => services.AddMvc();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.Configure<ServiceFabricCommunicationOptions>(Configuration.GetSection("Communication"));
+            services.AddMvc();            
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

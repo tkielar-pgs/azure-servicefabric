@@ -33,7 +33,7 @@ namespace PGS.Azure.ServiceFabric.VotingApi
                                 .AddSingleton(StateManager))
                         .UseContentRoot(Directory.GetCurrentDirectory())
                         .UseStartup<Startup>()
-                        .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.UseUniqueServiceUrl)
+                        .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.UseUniqueServiceUrl | ServiceFabricIntegrationOptions.UseReverseProxyIntegration)
                         .UseUrls(url)
                         .Build();
                 }));
