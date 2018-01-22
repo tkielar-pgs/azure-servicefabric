@@ -48,7 +48,7 @@ namespace PGS.Azure.ServiceFabric.VotingWeb.Controllers
         public async Task Post([FromBody] VoteKey voteKey, CancellationToken cancellationToken)
         {
             var requestBody = new StringContent(JsonConvert.SerializeObject(voteKey), Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _httpClient.PostAsync($"{GetProxyUrl(voteKey.GetHashCode())}", requestBody, cancellationToken);
+            HttpResponseMessage response = await _httpClient.PostAsync(GetProxyUrl(voteKey.GetHashCode()), requestBody, cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
