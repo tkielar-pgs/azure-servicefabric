@@ -52,6 +52,13 @@ namespace PGS.Azure.ServiceFabric.VotingWeb.Controllers
             response.EnsureSuccessStatusCode();
         }
 
+        [HttpDelete("{id}")]
+        public async Task Delete(string id, CancellationToken cancellationToken)
+        {
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"{GetProxyUrl(id.GetHashCode())}&id={id}", cancellationToken);
+            response.EnsureSuccessStatusCode();
+        }
+
         private string ProxyBaseUrl =>
             $"http://localhost:{_communicationOptions.ProxyPort}/{_serviceContext.CodePackageActivationContext.ApplicationName.Replace("fabric:/", "")}/";
 

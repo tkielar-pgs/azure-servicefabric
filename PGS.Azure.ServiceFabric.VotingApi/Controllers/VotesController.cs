@@ -56,5 +56,22 @@ namespace PGS.Azure.ServiceFabric.VotingApi.Controllers
                 await tx.CommitAsync();
             }
         }
+
+        [HttpDelete]
+        public async Task Delete(string id, CancellationToken cancellationToken)
+        {
+            var tryGetResult = await _stateManager.TryGetAsync<IReliableDictionary<string, long>>(VotesDictionaryName);
+
+            if (!tryGetResult.HasValue)
+            {
+                return;
+            }
+
+            using (ITransaction tx = _stateManager.CreateTransaction())
+            {
+                await tryGetResult.Value.TryRemoveAsync(tx, id);
+                await tx.CommitAsync();
+            }
+        }
     }
 }
