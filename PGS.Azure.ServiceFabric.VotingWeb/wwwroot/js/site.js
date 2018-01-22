@@ -18,7 +18,7 @@ app.controller('VotingAppController', ['$rootScope', '$scope', '$http', function
     };
 
     $scope.add = function (item) {
-        $http.put('api/Votes/' + item)
+        $http.post('api/Votes/', { id: item })
             .then(function () {
                 $scope.refresh();
                 $scope.item = undefined;

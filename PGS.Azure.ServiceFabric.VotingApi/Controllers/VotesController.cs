@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
+using PGS.Azure.ServiceFabric.VotingApi.Models;
 
 namespace PGS.Azure.ServiceFabric.VotingApi.Controllers
 {
@@ -16,11 +17,9 @@ namespace PGS.Azure.ServiceFabric.VotingApi.Controllers
 
         private readonly IReliableStateManager _stateManager;
 
-        public VotesController(IReliableStateManager stateManager)
-        {
-            _stateManager = stateManager;
-        }
+        public VotesController(IReliableStateManager stateManager) => _stateManager = stateManager;
 
+        [HttpGet]
         public async Task<IEnumerable<KeyValuePair<string, long>>> Get(CancellationToken cancellationToken)
         {
             ConditionalValue<IReliableDictionary<string, long>> tryGetResult = await _stateManager.TryGetAsync<IReliableDictionary<string, long>>(VotesDictionaryName);
@@ -44,6 +43,18 @@ namespace PGS.Azure.ServiceFabric.VotingApi.Controllers
             }
 
             return result;
+        }
+
+        [HttpPost]
+        public async Task Post([FromBody] VoteKey voteKey, CancellationToken cancellationToken)
+        {
+            var dictionary = await _stateManager.GetOrAddAsync<IReliableDictionary<string, long>>(VotesDictionaryName);
+
+            using (ITransaction tx = _stateManager.CreateTransaction())
+            {
+                await dictionary.TryAddAsync(tx, voteKey.Id, 0);
+                await tx.CommitAsync();
+            }
         }
     }
 }

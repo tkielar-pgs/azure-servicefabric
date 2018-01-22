@@ -4,12 +4,14 @@ using System.Fabric;
 using System.Fabric.Query;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PGS.Azure.ServiceFabric.VotingWeb.Configuration;
+using PGS.Azure.ServiceFabric.VotingWeb.Models;
 
 namespace PGS.Azure.ServiceFabric.VotingWeb.Controllers
 {
@@ -33,6 +35,7 @@ namespace PGS.Azure.ServiceFabric.VotingWeb.Controllers
             _communicationOptions = communicationOptions.Value;
         }
 
+        [HttpGet]
         public async Task<IEnumerable<KeyValuePair<string, long>>> Get(CancellationToken cancellationToken)
         {
             string serviceUri = $"{_serviceContext.CodePackageActivationContext.ApplicationName}/{_communicationOptions.VotingApiServiceName}";
@@ -41,19 +44,27 @@ namespace PGS.Azure.ServiceFabric.VotingWeb.Controllers
             return responses.SelectMany(x => x);
         }
 
-        private async Task<IEnumerable<KeyValuePair<string, long>>> GetAllVotes(Partition partition, CancellationToken cancellationToken)
+        [HttpPost]
+        public async Task Post([FromBody] VoteKey voteKey, CancellationToken cancellationToken)
         {
-            long partitionKey = ((Int64RangePartitionInformation) partition.PartitionInformation).LowKey;
-            string proxyUrl =
-                $"{ProxyBaseUrl}/{_communicationOptions.VotingApiServiceName}/api/votes?PartitionKind={partition.PartitionInformation.Kind}&PartitionKey={partitionKey}";
-
-            HttpResponseMessage response = await _httpClient.GetAsync(proxyUrl, cancellationToken);
+            var requestBody = new StringContent(JsonConvert.SerializeObject(voteKey), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _httpClient.PostAsync($"{GetProxyUrl(voteKey.GetHashCode())}", requestBody, cancellationToken);
             response.EnsureSuccessStatusCode();
-
-            return JsonConvert.DeserializeObject<KeyValuePair<string, long>[]>(await response.Content.ReadAsStringAsync());
         }
 
         private string ProxyBaseUrl =>
             $"http://localhost:{_communicationOptions.ProxyPort}/{_serviceContext.CodePackageActivationContext.ApplicationName.Replace("fabric:/", "")}/";
+
+        private string GetProxyUrl(long partitionKey) =>
+            $"{ProxyBaseUrl}/{_communicationOptions.VotingApiServiceName}/api/votes?PartitionKind=Int64Range&PartitionKey={partitionKey}";
+
+        private async Task<IEnumerable<KeyValuePair<string, long>>> GetAllVotes(Partition partition, CancellationToken cancellationToken)
+        {
+            long partitionKey = ((Int64RangePartitionInformation) partition.PartitionInformation).LowKey;
+            HttpResponseMessage response = await _httpClient.GetAsync(GetProxyUrl(partitionKey), cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            return JsonConvert.DeserializeObject<KeyValuePair<string, long>[]>(await response.Content.ReadAsStringAsync());
+        }
     }
 }
