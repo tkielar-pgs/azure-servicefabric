@@ -52,7 +52,7 @@ namespace PGS.Azure.ServiceFabric.VotingApi.Controllers
 
             using (ITransaction tx = _stateManager.CreateTransaction())
             {
-                await dictionary.TryAddAsync(tx, voteKey.Id, 0);
+                await dictionary.AddOrUpdateAsync(tx, voteKey.Id, 0, (_, count) => count + 1);
                 await tx.CommitAsync();
             }
         }
