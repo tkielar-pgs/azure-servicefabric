@@ -16,11 +16,16 @@
     <PackageReference Include="Microsoft.ServiceFabric.AspNetCore.Kestrel" Version="2.8.232" />
     <PackageReference Include="Microsoft.ServiceFabric.Data" Version="2.8.232" />
     <PackageReference Include="Microsoft.ServiceFabric.Services" Version="2.8.232" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="2.8.232" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PGS.Azure.ServiceFabric.VotingService.Abstractions\PGS.Azure.ServiceFabric.VotingService.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
