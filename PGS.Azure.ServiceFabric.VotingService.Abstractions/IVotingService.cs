@@ -11,5 +11,7 @@ namespace PGS.Azure.ServiceFabric.VotingService.Abstractions
     public interface IVotingService : IService
     {
         Task<KeyValuePair<string, long>[]> GetAll(CancellationToken cancellationToken = default(CancellationToken));
+        Task Add(string id, CancellationToken cancellationToken);
+        Task Remove(string id, CancellationToken cancellationToken);
     }
 }

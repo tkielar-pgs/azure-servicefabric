@@ -39,16 +39,11 @@ namespace PGS.Azure.ServiceFabric.VotingWeb.Controllers
         }
 
         [HttpPost]
-        public Task Post([FromBody] VoteKey voteKey, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        public Task Post([FromBody] VoteKey voteKey, CancellationToken cancellationToken) => 
+            GetService(voteKey.GetHashCode()).Add(voteKey.Id, cancellationToken);
 
         [HttpDelete("{id}")]
-        public Task Delete(string id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        public Task Delete(string id, CancellationToken cancellationToken) => GetService(id.GetHashCode()).Remove(id, cancellationToken);
 
         private Task<KeyValuePair<string, long>[]> GetAllVotes(Partition partition, CancellationToken cancellationToken)
         {
