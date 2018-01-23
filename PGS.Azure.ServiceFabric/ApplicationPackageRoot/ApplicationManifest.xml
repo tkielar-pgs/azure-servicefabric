@@ -1,22 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="PGS.Azure.ServiceFabricType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
-    <Parameter Name="PGS.Azure.ServiceFabric.VotingService_MinReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="PGS.Azure.ServiceFabric.VotingService_PartitionCount" DefaultValue="1" />
-    <Parameter Name="PGS.Azure.ServiceFabric.VotingService_TargetReplicaSetSize" DefaultValue="3" />
     <Parameter Name="PGS.Azure.ServiceFabric.VotingWeb_InstanceCount" DefaultValue="-1" />
     <Parameter Name="ASP_Environment" DefaultValue="Development" />
     <Parameter Name="VotingWeb_PlacementConstraints" DefaultValue="" />
     <Parameter Name="ProxyPort" DefaultValue="19081" />
-    <Parameter Name="VotingServiceName" DefaultValue="PGS.Azure.ServiceFabric.VotingService" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
-  <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="PGS.Azure.ServiceFabric.VotingServicePkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="PGS.Azure.ServiceFabric.VotingWebPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -24,7 +16,6 @@
         <Settings>
           <Section Name="Communication">
             <Parameter Name="ProxyPort" Value="[ProxyPort]" />
-            <Parameter Name="VotingServiceName" Value="[VotingServiceName]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -39,11 +30,6 @@
          ServiceFabric PowerShell module.
          
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
-    <Service Name="PGS.Azure.ServiceFabric.VotingService" ServicePackageActivationMode="ExclusiveProcess">
-      <StatefulService ServiceTypeName="PGS.Azure.ServiceFabric.VotingServiceType" TargetReplicaSetSize="[PGS.Azure.ServiceFabric.VotingService_TargetReplicaSetSize]" MinReplicaSetSize="[PGS.Azure.ServiceFabric.VotingService_MinReplicaSetSize]">
-        <UniformInt64Partition PartitionCount="[PGS.Azure.ServiceFabric.VotingService_PartitionCount]" LowKey="-2147483648" HighKey="2147483647" />
-      </StatefulService>
-    </Service>
     <Service Name="PGS.Azure.ServiceFabric.VotingWeb" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="PGS.Azure.ServiceFabric.VotingWebType" InstanceCount="[PGS.Azure.ServiceFabric.VotingWeb_InstanceCount]">
         <SingletonPartition />
