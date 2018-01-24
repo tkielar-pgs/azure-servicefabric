@@ -7,6 +7,10 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "PGS.Azure.ServiceFabric", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PGS.Azure.ServiceFabric.VotingWeb", "PGS.Azure.ServiceFabric.VotingWeb\PGS.Azure.ServiceFabric.VotingWeb.csproj", "{6CE960D5-DF88-4F98-8742-0A72B62E2D2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGS.Azure.ServiceFabric.VotingActor", "PGS.Azure.ServiceFabric.VotingActor\PGS.Azure.ServiceFabric.VotingActor.csproj", "{A6018E06-8BCF-40C6-890C-B33BCB0436A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGS.Azure.ServiceFabric.VotingActor.Interfaces", "PGS.Azure.ServiceFabric.VotingActor.Interfaces\PGS.Azure.ServiceFabric.VotingActor.Interfaces.csproj", "{A37D87B4-E6B2-400B-928A-186F326DA388}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,18 @@ Global
 		{6CE960D5-DF88-4F98-8742-0A72B62E2D2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6CE960D5-DF88-4F98-8742-0A72B62E2D2B}.Release|x64.ActiveCfg = Release|Any CPU
 		{6CE960D5-DF88-4F98-8742-0A72B62E2D2B}.Release|x64.Build.0 = Release|Any CPU
+		{A6018E06-8BCF-40C6-890C-B33BCB0436A1}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{A6018E06-8BCF-40C6-890C-B33BCB0436A1}.Debug|x64.ActiveCfg = Debug|x64
+		{A6018E06-8BCF-40C6-890C-B33BCB0436A1}.Debug|x64.Build.0 = Debug|x64
+		{A6018E06-8BCF-40C6-890C-B33BCB0436A1}.Release|Any CPU.ActiveCfg = Release|x64
+		{A6018E06-8BCF-40C6-890C-B33BCB0436A1}.Release|x64.ActiveCfg = Release|x64
+		{A6018E06-8BCF-40C6-890C-B33BCB0436A1}.Release|x64.Build.0 = Release|x64
+		{A37D87B4-E6B2-400B-928A-186F326DA388}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{A37D87B4-E6B2-400B-928A-186F326DA388}.Debug|x64.ActiveCfg = Debug|x64
+		{A37D87B4-E6B2-400B-928A-186F326DA388}.Debug|x64.Build.0 = Debug|x64
+		{A37D87B4-E6B2-400B-928A-186F326DA388}.Release|Any CPU.ActiveCfg = Release|x64
+		{A37D87B4-E6B2-400B-928A-186F326DA388}.Release|x64.ActiveCfg = Release|x64
+		{A37D87B4-E6B2-400B-928A-186F326DA388}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

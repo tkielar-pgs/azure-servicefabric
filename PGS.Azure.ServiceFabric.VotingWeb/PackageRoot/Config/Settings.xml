@@ -9,5 +9,6 @@
 
   <Section Name="Communication">
     <Parameter Name="ProxyPort" Value="" MustOverride="true" />
+    <Parameter Name="VotingActorServiceName" Value="" MustOverride="true"/>
   </Section>
 </Settings>

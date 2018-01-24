@@ -3,5 +3,6 @@
     public class ServiceFabricCommunicationOptions
     {
         public int ProxyPort { get; set; }
+        public string VotingActorServiceName { get; set; }
     }
 }

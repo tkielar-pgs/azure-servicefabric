@@ -5,10 +5,17 @@
     <Parameter Name="ASP_Environment" DefaultValue="Development" />
     <Parameter Name="VotingWeb_PlacementConstraints" DefaultValue="" />
     <Parameter Name="ProxyPort" DefaultValue="19081" />
+    <Parameter Name="VotingActorServiceName" DefaultValue="VotingActorService" />
+    <Parameter Name="VotingActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="VotingActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="VotingActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="PGS.Azure.ServiceFabric.VotingActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="PGS.Azure.ServiceFabric.VotingWebPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -16,6 +23,7 @@
         <Settings>
           <Section Name="Communication">
             <Parameter Name="ProxyPort" Value="[ProxyPort]" />
+            <Parameter Name="VotingActorServiceName" Value="[VotingActorServiceName]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -35,6 +43,11 @@
         <SingletonPartition />
         <PlacementConstraints>[VotingWeb_PlacementConstraints]</PlacementConstraints>
       </StatelessService>
+    </Service>
+    <Service Name="VotingActorService" GeneratedIdRef="c8bed390-7ece-4553-9fa1-e090516ab730|Persisted">
+      <StatefulService ServiceTypeName="VotingActorServiceType" TargetReplicaSetSize="[VotingActorService_TargetReplicaSetSize]" MinReplicaSetSize="[VotingActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[VotingActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
     </Service>
   </DefaultServices>
 </ApplicationManifest>
